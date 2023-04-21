@@ -44,7 +44,11 @@ product_schema =ProductSchema()
 products_schema = ProductSchema(many=True)
 
 # Resources
-
+class ProudctListResource(Resource):
+    def get(self):
+        all_products = Product.query.all()
+        return products_schema.dump(all_products)
 
 
 # Routes
+api.add_resource(ProudctListResource, "/api/products")
