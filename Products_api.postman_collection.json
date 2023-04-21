@@ -34,7 +34,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:5000/api/products/1",
+					"raw": "http://127.0.0.1:5000/api/products/",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -46,14 +46,14 @@
 					"path": [
 						"api",
 						"products",
-						"1"
+						""
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Delete Product By ID Copy",
+			"name": "Delete Product By ID",
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -115,7 +115,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"name\": \"Xbox Original\",\r\n        \"description\": \"First Xbox gaming console from Microsoft\",\r\n        \"price\": 99.99,\r\n        \"inventory_quantity\": 10\r\n        \r\n    }",
+					"raw": "{\r\n        \"name\": \"PSP Original\",\r\n        \"description\": \"Handheld Gaming Constole from Sony\",\r\n        \"price\": 99.99,\r\n        \"inventory_quantity\": 10\r\n        \r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -123,7 +123,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/api/products/5",
+					"raw": "http://127.0.0.1:5000/api/products/",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -135,7 +135,7 @@
 					"path": [
 						"api",
 						"products",
-						"5"
+						""
 					]
 				}
 			},
