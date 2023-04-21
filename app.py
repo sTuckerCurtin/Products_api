@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
+from marshmallow import post_load, fields, ValidationError
 from dotenv import load_dotenv
 from os import environ
 
@@ -37,8 +38,17 @@ class Product(db.Model):
 
 # Schemas
 class ProductSchema(ma.Schema):
+    id = fields.Integer(primary_key=True)
+    name = fields.String(required=True)
+    description = fields.String()
+    price = fields.Float(required=True)
+    inventory_quantity = fields.Integer(required=True)
     class Meta:
         fields = ("id", "name", "description", "price", "inventory_quantity")
+
+    @post_load
+    def create_product(self, data, **kwargs):
+        return Product(**data)
 
 product_schema =ProductSchema()
 products_schema = ProductSchema(many=True)
@@ -50,17 +60,15 @@ class ProudctListResource(Resource):
         return products_schema.dump(all_products), 200
     
     def post(self):
-        new_product = Product(
-            name=request.json["name"],
-            description=request.json["description"],
-            price=request.json["price"],
-            inventory_quantity=request.json["inventory_quantity"],
-
-        )
-        db.session.add(new_product)
-        db.session.commit()
-        return product_schema.dump(new_product), 201
-    
+        form_data = request.get_json()
+        try:
+            new_product =product_schema.load(form_data)
+        
+            db.session.add(new_product)
+            db.session.commit()
+            return product_schema.dump(new_product), 201
+        except ValidationError as err:
+            return err.messages, 400
 
 class ProductResource(Resource):
     def get(self, product_id):
