@@ -48,6 +48,19 @@ class ProudctListResource(Resource):
     def get(self):
         all_products = Product.query.all()
         return products_schema.dump(all_products)
+    
+    def post(self):
+        print(request)
+        new_product = Product(
+            name=request.json["name"],
+            description=request.json["description"],
+            price=request.json["price"],
+            inventory_quantity=request.json["inventory_quantity"],
+
+        )
+        db.session.add(new_product)
+        db.session.commit()
+        return product_schema.dump(new_product), 201
 
 
 # Routes
